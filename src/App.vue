@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <Header/>
     <Form @handleParentAddTodo="handleParentAddTodo"/>
     <List :todos="todos"
           @handleParentDeleteTodo="handleParentDeleteTodo"
@@ -12,6 +12,7 @@
 import Header from './components/header.vue';
 import Form from './components/form.vue';
 import List from './components/list.vue';
+import firebase from 'firebase';
 
 export default {
   name: 'App',
@@ -22,13 +23,20 @@ export default {
   },
   data(){
     return {
-      todos: []
+      todos: firebase.database().ref("test").once("child_added",function(obj){
+        console.log(obj.key);
+        console.log(obj.val());
+      })
     }
   },
   methods:{
     handleParentAddTodo(value){
+      const db = firebase.database();
       if(value){
-        this.todos.unshift({text: value, complete: false});
+        db.ref("test/").push(
+          {text: value, complete: false}
+        )
+        // this.todos.unshift({text: value, complete: false});
       }
     },
     handleParentDeleteTodo(index){
