@@ -6,11 +6,7 @@
 
 <script>
 export default {
-    data(){
-        return {
-            title: "TODO-APP",
-        }
-    },
+    props: ['title']
 }
 </script>
 

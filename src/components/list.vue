@@ -20,7 +20,7 @@ export default {
       this.$emit('handleParentDeleteTodo',index);
     },
     handleCompleteTodo(index){
-      console.log(index);
+      // console.log(index);
       this.$emit('handleParentCompleteTodo',index);
     }
   },

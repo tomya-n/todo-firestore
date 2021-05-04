@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header/>
+    <Header :title="title"/>
     <Form @handleParentAddTodo="handleParentAddTodo"/>
     <List :todos="todos"
           @handleParentDeleteTodo="handleParentDeleteTodo"
@@ -23,6 +23,7 @@ export default {
   },
   data(){
     return {
+      title: "Todo",
       todos: firebase.database().ref("test").once("value",function(obj){
         return obj.val();
       }),
@@ -30,9 +31,8 @@ export default {
   },
   methods:{
     handleParentAddTodo(value){
-      const db = firebase.database();
       if(value){
-        db.ref("test/").push(
+        firebase.database().ref("test/").push(
           {text: value, complete: false}
         ).then(response => {
           console.log(response , "登録成功！");
@@ -40,11 +40,12 @@ export default {
       }
     },
     handleParentDeleteTodo(index){
-      const db = firebase.database();
-      db.ref("test/").child(index).remove();
+      firebase.database().ref("test/").child(index).remove();
     },
     handleParentCompleteTodo(index){
-      this.todos[index].complete = !this.todos[index].complete;
+      firebase.database().ref("test/").child(index).on("value",snapshot=>{
+        console.log(snapshot.val().complete);
+      })
     }
   },
   mounted(){
