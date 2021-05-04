@@ -1,10 +1,12 @@
 <template>
   <div>
+    <ol>
     <li v-for="(todo, index) in todos" :key="index">
       <span>{{ todo.text }}</span>
       <button @click="handleCompleteTodo(index)">{{ todo.complete ? '完了' : '未完了' }}</button>
       <button @click="handleDeleteTodo(index)">削除</button>
     </li>
+    </ol>
   </div>
 </template>
 

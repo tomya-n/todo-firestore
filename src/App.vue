@@ -37,11 +37,9 @@ export default {
         ).then(response => {
           console.log(response , "登録成功！");
         })
-        // this.todos.unshift({text: value, complete: false});
       }
     },
     handleParentDeleteTodo(index){
-      // this.todos.splice(index,1);
       const db = firebase.database();
       db.ref("test/").child(index).remove();
     },
